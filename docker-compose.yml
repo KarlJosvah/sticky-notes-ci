@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: sticky_notes_db
+    restart: always
+    environment:
+      MYSQL_DATABASE: sticky_notes
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  app:
+    build: .
+    container_name: sticky_notes_app
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      - DB_HOSTNAME=db
+      - DB_USERNAME=user
+      - DB_PASSWORD=user_password
+      - DB_NAME=sticky_notes
+    depends_on:
+      - db
+
+volumes:
+  db_data:

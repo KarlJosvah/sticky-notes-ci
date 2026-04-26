@@ -1,0 +1,11 @@
+.git
+.gitignore
+.editorconfig
+Dockerfile
+docker-compose.yml
+php.ini
+*.md
+setup_db.php
+node_modules
+vendor
+composer.lock
