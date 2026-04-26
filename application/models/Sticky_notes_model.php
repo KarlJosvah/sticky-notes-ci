@@ -6,6 +6,20 @@ class Sticky_notes_model extends CI_Model {
     public function __construct() {
         parent::__construct();
         $this->load->database();
+        $this->_check_table();
+    }
+
+    private function _check_table() {
+        if (!$this->db->table_exists('sticky_notes')) {
+            $this->load->dbforge();
+            $this->dbforge->add_field(array(
+                'id' => array('type' => 'INTEGER', 'primary_key' => TRUE, 'auto_increment' => TRUE),
+                'title' => array('type' => 'VARCHAR', 'constraint' => '255'),
+                'content' => array('type' => 'TEXT'),
+                'created_at' => array('type' => 'DATETIME', 'default' => 'CURRENT_TIMESTAMP')
+            ));
+            $this->dbforge->create_table('sticky_notes');
+        }
     }
 
     public function get_all_notes() {

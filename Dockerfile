@@ -8,8 +8,9 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     zip \
     unzip \
+    libsqlite3-dev \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd mysqli pdo_mysql
+    && docker-php-ext-install gd pdo_sqlite
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
@@ -23,6 +24,10 @@ COPY . /var/www/html/
 # Use the PORT environment variable in Apache configuration
 # Cloud Run injects the PORT environment variable at runtime.
 RUN sed -i 's/80/${PORT}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
+
+# Create database directory and ensure it's writable
+RUN mkdir -p /var/www/html/application/database \
+    && chown -R www-data:www-data /var/www/html/application/database
 
 # Set permissions for the web server
 RUN chown -R www-data:www-data /var/www/html \
