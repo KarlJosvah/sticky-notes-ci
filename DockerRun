@@ -1,3 +1,44 @@
 docker build -t sticky:1.0.0 .
 
 docker run -p 8080:8080 -e PORT=8080 -e BASE_URL=http://localhost:8080/ --name sticky sticky:1.0.0
+
+
+
+
+
+
+gcloud builds submit --tag us-central1-docker.pkg.dev/${GOOGLE_CLOUD_PROJECT}/sticky-notes-ci/sticky-notes-ci:1.0.0
+```
+DONE
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ID: 4dc4474b-e9c9-444e-9744-247495ca993a
+CREATE_TIME: 2026-04-26T19:59:14+00:00
+DURATION: 1M38S
+SOURCE: gs://qwiklabs-gcp-03-bf24eb800d32_cloudbuild/source/1777233549.82359-b10d8c91dd3543b9881616c775a0c083.tgz
+IMAGES: us-central1-docker.pkg.dev/qwiklabs-gcp-03-bf24eb800d32/sticky-notes-ci/sticky-notes-ci:1.0.0
+STATUS: SUCCESS
+```
+
+gcloud run deploy sticky-notes-ci \
+  --image us-central1-docker.pkg.dev/${GOOGLE_CLOUD_PROJECT}/sticky-notes-ci/sticky-notes-ci:1.0.0 \
+  --region us-central1
+```
+Deploying container to Cloud Run service [sticky-notes-ci] in project [qwiklabs-gcp-03-bf24eb800d32] region [us-central1]
+Deploying new service...                                                                                                                                                                                
+  Setting IAM Policy...done                                                                                                                                                                             
+  Creating Revision...done                                                                                                                                                                              
+  Routing traffic...done                                                                                                                                                                                
+Done.                                                                                                                                                                                                   
+Service [sticky-notes-ci] revision [sticky-notes-ci-00001-gj8] has been deployed and is serving 100 percent of traffic.
+Service URL: https://sticky-notes-ci-477840537245.us-central1.run.app
+```
+
+gcloud run services list
+```
+✔
+SERVICE: sticky-notes-ci
+REGION: us-central1
+URL: https://sticky-notes-ci-477840537245.us-central1.run.app
+LAST DEPLOYED BY: student-00-5fa5b602bfc1@qwiklabs.net
+LAST DEPLOYED AT: 2026-04-26T20:04:04.052595Z
+```
