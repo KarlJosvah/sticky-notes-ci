@@ -1,6 +1,6 @@
 docker build -t sticky:1.0.0 .
 
-docker run -p 8080:8080 -e PORT=8080 -e BASE_URL=http://localhost:8080/ --name sticky sticky:1.0.0
+docker run -p 8080:8080 -e PORT=8080 --name sticky sticky:1.0.0
 
 
 
