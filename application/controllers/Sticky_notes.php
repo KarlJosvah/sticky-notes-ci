@@ -13,14 +13,14 @@ class Sticky_notes extends CI_Controller {
         $this->load->view('sticky_notes/index', $data);
     }
 
-    public function create() {
-        $data = array(
-            'title' => $this->input->post('title'),
-            'content' => $this->input->post('content')
-        );
-        $this->sticky_notes_model->create_note($data);
-        redirect('sticky_notes');
-    }
+    // public function create() {
+    //     $data = array(
+    //         'title' => $this->input->post('title'),
+    //         'content' => $this->input->post('content')
+    //     );
+    //     $this->sticky_notes_model->create_note($data);
+    //     redirect('sticky_notes');
+    // }
 
     public function edit($id) {
         $data = array(
